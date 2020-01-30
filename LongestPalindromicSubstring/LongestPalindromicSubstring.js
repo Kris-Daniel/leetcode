@@ -1,22 +1,20 @@
 var LongestPalindromicSubstring = function (s) {
     var len = s.length;
-    if (len <= 1) return s;
-    var maxSubStr = s[0];
+    var start = 0;
+    var end = 1;
     for (var i = 0; i < len - 1; i++) {
-        for(var j = i + maxSubStr.length; j < len; j++) {
-            var subStr = s.slice(i, j + 1);
-            if(isPalindrome(subStr)) {
-                maxSubStr = maxSubStr.length > subStr.length ? maxSubStr : subStr;
+        for (var j = i + end - start; j < len; j++) {
+            for (var m = i, n = j, isPalindrome = true; (m < n) && (isPalindrome = !(s[m++] != s[n--])); )
+                ;
+            if (isPalindrome) {
+                if (end - start < j + 1 - i) {
+                    start = i;
+                    end = j + 1;
+                }
             }
         }
     }
-    return maxSubStr;
+    return s.slice(start, end);
 };
 
-function isPalindrome(s) {
-    for(var i = 0, j = s.length - 1; i < j; i++, j--)
-        if(s[i] != s[j]) return false;
-	return s;
-}
-
-console.log(LongestPalindromicSubstring("jglknendplocymmvwtoxvebkekzfdhykknufqdkntnqvgfbahsljkobhbxkvyictzkqjqydczuxjkgecdyhixdttxfqmgksrkyvopwprsgoszftuhawflzjyuyrujrxluhzjvbflxgcovilthvuihzttzithnsqbdxtafxrfrblulsakrahulwthhbjcslceewxfxtavljpimaqqlcbrdgtgjryjytgxljxtravwdlnrrauxplempnbfeusgtqzjtzshwieutxdytlrrqvyemlyzolhbkzhyfyttevqnfvmpqjngcnazmaagwihxrhmcibyfkccyrqwnzlzqeuenhwlzhbxqxerfifzncimwqsfatudjihtumrtjtggzleovihifxufvwqeimbxvzlxwcsknksogsbwwdlwulnetdysvsfkonggeedtshxqkgbhoscjgpiel"));
+console.log(LongestPalindromicSubstring(""));
