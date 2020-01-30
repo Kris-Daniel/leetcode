@@ -1,25 +1,22 @@
 var LongestPalindromicSubstring = function (s) {
-    if(s.length <= 1) return s;
-    var result = s[0];
     var len = s.length;
-    var max = 0;
-    var endLoop = false;
-    for (var i = 0; i <= len - 1; i++) {
-        if(endLoop) break;
-        for(var j = len - 1; j > i; j--) {
-            if(s[i] == s[j]) {
-                if(max < j - i) {
-                    max = j - i;
-                    result = s.slice(i, j + 1);
-                    endLoop = true;
-                    break;
-                } else {
-                    break;
-                }
+    if (len <= 1) return s;
+    var maxSubStr = s[0];
+    for (var i = 0; i < len - 1; i++) {
+        for(var j = i + maxSubStr.length; j < len; j++) {
+            var subStr = s.slice(i, j + 1);
+            if(isPalindrome(subStr)) {
+                maxSubStr = maxSubStr.length > subStr.length ? maxSubStr : subStr;
             }
         }
     }
-    return result;
+    return maxSubStr;
 };
 
-console.log(LongestPalindromicSubstring("abcda"));
+function isPalindrome(s) {
+    for(var i = 0, j = s.length - 1; i < j; i++, j--)
+        if(s[i] != s[j]) return false;
+	return s;
+}
+
+console.log(LongestPalindromicSubstring("jglknendplocymmvwtoxvebkekzfdhykknufqdkntnqvgfbahsljkobhbxkvyictzkqjqydczuxjkgecdyhixdttxfqmgksrkyvopwprsgoszftuhawflzjyuyrujrxluhzjvbflxgcovilthvuihzttzithnsqbdxtafxrfrblulsakrahulwthhbjcslceewxfxtavljpimaqqlcbrdgtgjryjytgxljxtravwdlnrrauxplempnbfeusgtqzjtzshwieutxdytlrrqvyemlyzolhbkzhyfyttevqnfvmpqjngcnazmaagwihxrhmcibyfkccyrqwnzlzqeuenhwlzhbxqxerfifzncimwqsfatudjihtumrtjtggzleovihifxufvwqeimbxvzlxwcsknksogsbwwdlwulnetdysvsfkonggeedtshxqkgbhoscjgpiel"));
